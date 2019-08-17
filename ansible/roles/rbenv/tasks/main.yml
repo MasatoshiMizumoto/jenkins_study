@@ -1,19 +1,19 @@
 ---
 # tasks file for rbenv
 - name: Check rbenv
-  shell: ~/.rbenv/bin/rbenv --version
+  command: ~/.rbenv/bin/rbenv --version
   register: rbenv_exists
   changed_when: False
   ignore_errors: yes
 
 - name: Check installed ruby version
-  shell: ~/.rbenv/bin/rbenv versions | grep "{{ ruby_version }}"
+  command: ~/.rbenv/bin/rbenv versions | grep "{{ ruby_version }}"
   register: has_ruby_version
   changed_when: False
   ignore_errors: yes
 
 - name: Check ruby version
-  shell: ~/.rbenv/bin/rbenv version | grep "{{ ruby_version }}"
+  command: ~/.rbenv/bin/rbenv version | grep "{{ ruby_version }}"
   register: is_ruby_version
   changed_when: False
   ignore_errors: yes
@@ -45,25 +45,25 @@
   when: rbenv_exists is failed
 
 - name: Update rbenv
-  shell: git pull
+  command: git pull
   args:
     chdir: ~/.rbenv
   when: has_ruby_version is failed
 
 - name: Update ruby-build
-  shell: git pull
+  command: git pull
   args:
     chdir: ~/.rbenv/plugins/ruby-build
   when: has_ruby_version is failed
 
 - name: Make rbenv
-  shell: src/configure && make -C src
+  command: src/configure && make -C src
   args:
     chdir: ~/.rbenv
   when: has_ruby_version is failed
 
 - name: Register rbenv
-  shell: "{{ items }}"
+  command: "{{ items }}"
   with_items:
   - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
   - echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
@@ -77,5 +77,5 @@
   when: has_ruby_version is failed
 
 - name: Set default ruby version
-  shell: ~/.rbenv/bin/rbenv global "{{ ruby_version }}"
+  command: ~/.rbenv/bin/rbenv global "{{ ruby_version }}"
   when: is_ruby_version is failed
