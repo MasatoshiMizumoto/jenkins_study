@@ -71,7 +71,7 @@
 - name: Register rbenv
   lineinfile:
     dest="~/.bash_profile"
-    line="{{ item }}""
+    line="{{ item }}"
   with_items:
     - export PATH="~/.rbenv/bin:$PATH"
     - eval "$(rbenv init -)"
