@@ -82,6 +82,7 @@
   with_items:
     - export PATH="~/.rbenv/bin:$PATH"
     - eval "$(rbenv init -)"
+  shell: source ~/.bash_profile"
   when: rbenv_exists is failed
 
 # install ruby
