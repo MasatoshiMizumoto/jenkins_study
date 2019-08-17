@@ -7,7 +7,7 @@
   ignore_errors: yes
 
 - name: Check rbenv 2
-  shell: cat ~/.bash_profile | grep rbenv
+  shell: cat ~/.bashrc | grep rbenv
   register: rbenv_exists
   changed_when: False
   ignore_errors: yes
