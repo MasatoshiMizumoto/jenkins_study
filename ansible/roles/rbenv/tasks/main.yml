@@ -65,9 +65,9 @@
 - name: Register rbenv
   command: "{{ items }}"
   with_items:
-  - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-  - echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
-  - source ~/.bash_profile
+   - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+   - echo 'eval "$(rbenv init -)"' >> ~/.bash_profile"
+   - source ~/.bash_profile"
   when: rbenv_exists is failed
 
 # install ruby
