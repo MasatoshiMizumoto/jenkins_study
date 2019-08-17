@@ -71,18 +71,13 @@
 
 
 - name: Register rbenv
-  # shell: "{{ item }}"
-  # with_items:
-  #  - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
-  #  - echo 'eval "$(rbenv init -)"' >> ~/.bash_profile"
-  #  - source ~/.bash_profile"
   lineinfile:
     dest=~/.bash_profile
     line={{ item }}
   with_items:
     - export PATH="~/.rbenv/bin:$PATH"
     - eval "$(rbenv init -)"
-  shell: source ~/.bash_profile"
+  shell: source ~/.bash_profile
   when: rbenv_exists is failed
 
 # install ruby
