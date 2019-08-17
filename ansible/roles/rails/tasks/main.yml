@@ -13,7 +13,7 @@
     - rails:check
 
 - name: check Rails app dir
-  command: "{{ item }}"
+  shell: "{{ item }}"
   with_items:
     - cd "{{ home_dir }}"
     - ls | grep "{{ app_name }}"
@@ -38,14 +38,14 @@
 #install
 #-------------
 - name: gem install rails -v "{{ rails_version }}"
-  command: gem install rails -v "{{ rails_version }}"
+  shell: gem install rails -v "{{ rails_version }}"
   when: rails_installed.stdout != rails_version
   tags:
     - rails
     - rails:install
 
 - name: create new rails app
-  command: "{{ item }}"
+  shell: "{{ item }}"
   with_items:
     - cd "{{ home_dir }}"
     - rails new "{{ app_name }}"
@@ -55,7 +55,7 @@
     - rails:install
 
 - name: install unicorn
-  command: "{{ item }}"
+  shell: "{{ item }}"
   with_items:
     - cd  "{{ app_name }}"
     - echo 'gem 'unicorn'' >>Gemfile
