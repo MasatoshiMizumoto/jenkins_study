@@ -13,8 +13,10 @@
     - rails:check
 
 - name: check Rails app dir
-  command: cd "{{ home_dir }}"
-  shell: ls | "{{ app_name }}"
+  command: "{{ item }}"
+  with_items:
+    - cd "{{ home_dir }}"
+    - ls | "{{ app_name }}"
   register: rails_app_created
   changed_when: False
   ignore_errors: yes
