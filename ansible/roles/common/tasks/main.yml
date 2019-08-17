@@ -1,0 +1,23 @@
+---
+# tasks file for comon
+- name: Installed common packages update.
+  yum: name=* state=latest
+
+- name: Install common package.
+  yum: name={{ item }} state=latest
+  with_items:
+    - gcc-c++
+    - glibc-headers
+    - openssl-devel
+    - readline
+    - libyaml-devel
+    - readline-devel
+    - zlib
+    - zlib-devel
+    - libffi-devel
+    - libxml2
+    - libxslt
+    - libxml2-devel
+    - libxslt-devel
+    - sqlite-devel
+    - git

@@ -1,0 +1,102 @@
+---
+# tasks file for rails
+
+#-------------
+#check
+#-------------
+- name: check Rails installed
+  shell: rails -v | cut -f 2 -d ' '
+  register: rails_installed
+  ignore_errors: yes
+  tags:
+    - rails
+    - rails:check
+
+- name: check Rails app dir
+  command: cd "{{ home_dir }}"
+  shell: ls | "{{ app_name }}"
+  register: rails_app_created
+  changed_when: False
+  ignore_errors: yes
+  tags:
+    - rails
+    - rails:check
+
+- name: check uniciorn service
+- stat: /etc/init.d/unicorn
+  register: unicoern_sv
+  tags:
+    - gem
+    - gem:check
+
+#-------------
+#install
+#-------------
+- name: gem install rails -v "{{ rails_version }}"
+  command: gem install rails -v "{{ rails_version }}"
+  when: rails_installed.stdout != rails_version
+  tags:
+    - rails
+    - rails:install
+
+- name: create new rails app
+  command: cd "{{ home_dir }}"
+  command: rails new "{{ app_name }}"
+  when: rails_app_created is failed
+  tags:
+    - rails
+    - rails:install
+
+- name: install unicorn
+  command: cd  "{{ app_name }}"
+  command: echo 'gem 'unicorn'' >>Gemfile
+  command: bundle install --path vendor/bundle
+  when: rails_app_created is failed
+  tags:
+    - gem
+    - gem:install
+
+- name: replace nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: /etc/nginx/nginx.conf
+    mode: 0644
+  when: ails_app_created is failed or unicorn_sv.stat.exists is false
+  tags:
+    - nginx
+    - nginx:config
+
+- name: replace unicorn.rb
+  template:
+    src: unicorn.rb.j2
+    dest: "{{ home_dir }}"/"{{ app_name }}"/config/unicorn.rb
+  when: ails_app_created is failed or unicorn_sv.stat.exists is false
+  tags:
+    - gem
+    - gem:config
+
+- name: create unicorn service
+  template:
+    src: init.d.unicorn.j2
+    dest: /etc/init.d/unicorn
+    mode: 0755
+  when: ails_app_created is failed or unicorn_sv.stat.exists is false
+  tags:
+    - service
+    - service:config
+
+- name: unicorn service start
+  shell: "systemctl enable unicorn"
+  shell: "systemctl restart unicorn"
+  become: yes
+  when: rails_app_created is failed or unicorn_sv.stat.exists is false
+  tags:
+    - service
+    - service:config
+
+- name: nginx service restart
+  shell: "systemctl restart nginx"
+  become: yes
+  when: rails_app_created is failed or unicorn_sv.stat.exists is false
+    - service
+    - service:config

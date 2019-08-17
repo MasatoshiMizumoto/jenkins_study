@@ -1,0 +1,33 @@
+---
+# tasks file for nginx
+
+#- name: Install openssl
+#  yum: name=openssl-devel
+
+- name: Check NGINX
+  shell: nginx -v
+  register: nginx_exists
+  changed_when: False
+  ignore_errors: yes
+
+- name: Enable to install NGINX.
+  shell: "amazon-linux-extras enable nginx1.12"
+  become: yes
+  when: nginx_exists is failed
+
+- name: Install NGINX.
+  yum: name=nginx
+  become: yes
+
+- name: autostart set
+  shell: "systemctl enable nginx"
+  become: yes
+  when: nginx_exists is failed
+
+- name: service restart
+  shell: "systemctl start nginx"
+  become: yes
+  when: nginx_exists is failed
+
+# - command: chkconfig nginx on
+# - command: service nginx restart

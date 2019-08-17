@@ -1,0 +1,79 @@
+---
+# tasks file for rbenv
+- name: Check rbenv
+  shell: ~/.rbenv/bin/rbenv --version
+  register: rbenv_exists
+  changed_when: False
+  ignore_errors: yes
+
+- name: Check installed ruby version
+  shell: ~/.rbenv/bin/rbenv versions | grep "{{ ruby_version }}"
+  register: has_ruby_version
+  changed_when: False
+  ignore_errors: yes
+
+- name: Check ruby version
+  shell: ~/.rbenv/bin/rbenv version | grep "{{ ruby_version }}"
+  register: is_ruby_version
+  changed_when: False
+  ignore_errors: yes
+
+- name: Install ruby requiring packages
+  yum:
+    name:
+      - bzip2
+      - gcc*
+      - openssl-devel
+      - readline-devel
+      - zlib-devel
+  become: yes
+  become_method: sudo
+  when: has_ruby_version is failed
+
+# install rbenv
+
+- git:
+    repo: https://github.com/rbenv/rbenv.git
+    dest: ~/.rbenv
+  when: rbenv_exists is failed
+
+- git:
+    repo: https://github.com/rbenv/ruby-build.git
+    dest: ~/.rbenv/plugins/ruby-build
+  when: rbenv_exists is failed
+
+- name: Update rbenv
+  shell: git pull
+  args:
+    chdir: ~/.rbenv
+  when: has_ruby_version is failed
+
+- name: Update ruby-build
+  shell: git pull
+  args:
+    chdir: ~/.rbenv/plugins/ruby-build
+  when: has_ruby_version is failed
+
+- name: Make rbenv
+  shell: src/configure && make -C src
+  args:
+    chdir: ~/.rbenv
+  when: has_ruby_version is failed
+
+- name: Register rbenv
+  shell: echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+  when: rbenv_exists is failed
+
+- name: Register rbenv
+  shell: echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+  when: rbenv_exists is failed
+
+# install ruby
+
+- name: Install Ruby
+  command: ~/.rbenv/bin/rbenv install "{{ ruby_version }}"
+  when: has_ruby_version is failed
+
+- name: Set default ruby version
+  shell: ~/.rbenv/bin/rbenv global "{{ ruby_version }}"
+  when: is_ruby_version is failed
