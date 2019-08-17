@@ -69,7 +69,7 @@
   when: has_ruby_version is failed
 
 - name: Register rbenv
-  : "{{ item }}"
+  shell: "{{ item }}"
   with_items:
    - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
    - echo 'eval "$(rbenv init -)"' >> ~/.bash_profile"
