@@ -54,10 +54,19 @@
     - rails
     - rails:install
 
+
+- name: Gemfile rename
+  shell: mv {{ app_name}}/Gemfile Gemfile.tmp
+  when: rails_app_created is failed
+
 - name: Gemfile modify
   lineinfile:
-    dest="{{ home_dir }}/{{ app_name }}/Gemfile"
+    dest="{{ home_dir }}/{{ app_name }}/Gemfile.tmp"
     line=gem 'unicorn'
+  when: rails_app_created is failed
+
+  - name: Gemfile rename2
+  shell: mv {{ app_name}}/Gemfile.tmp Gemfile
   when: rails_app_created is failed
 
 - name: install unicorn
