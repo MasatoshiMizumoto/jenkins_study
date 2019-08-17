@@ -68,12 +68,10 @@
     chdir: ~/.rbenv
   when: has_ruby_version is failed
 
-
-
 - name: Register rbenv
   lineinfile:
-    dest=~/.bash_profile
-    line={{ item }}
+    dest="~/.bash_profile"
+    line="{{ item }}""
   with_items:
     - export PATH="~/.rbenv/bin:$PATH"
     - eval "$(rbenv init -)"
