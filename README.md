@@ -40,6 +40,16 @@ jenkins_study
 │       │   │   └── main.yml
 │       │   └── templates
 │       │       └── npm.sh.j2
+│       ├── rails
+│       │   ├── README.md
+│       │   ├── defaults
+│       │   │   └── main.yml
+│       │   ├── tasks
+│       │   │   └── main.yml
+│       │   └── templates
+│       │       ├── init.d.unicorn.j2
+│       │       ├── nginx.conf.j2
+│       │       └── unicorn.rb.j2
 │       └── rbenv
 │           ├── defaults
 │           │   └── main.yml
