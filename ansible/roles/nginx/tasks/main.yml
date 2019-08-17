@@ -28,6 +28,3 @@
   shell: "systemctl start nginx"
   become: yes
   when: nginx_exists is failed
-
-# - command: chkconfig nginx on
-# - command: service nginx restart
