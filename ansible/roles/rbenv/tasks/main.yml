@@ -1,25 +1,25 @@
 ---
 # tasks file for rbenv
 - name: Check rbenv 1
-  command: ~/.rbenv/bin/rbenv --version
+  shell: ~/.rbenv/bin/rbenv --version
   register: rbenv_exists
   changed_when: False
   ignore_errors: yes
 
 - name: Check rbenv 2
-  command: cat ~/.bash_profile | grep rbenv
+  shell: cat ~/.bash_profile | grep rbenv
   register: rbenv_exists
   changed_when: False
   ignore_errors: yes
 
 - name: Check installed ruby version
-  command: ~/.rbenv/bin/rbenv versions | grep "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv versions | grep "{{ ruby_version }}"
   register: has_ruby_version
   changed_when: False
   ignore_errors: yes
 
 - name: Check ruby version
-  command: ~/.rbenv/bin/rbenv version | grep "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv version | grep "{{ ruby_version }}"
   register: is_ruby_version
   changed_when: False
   ignore_errors: yes
@@ -51,25 +51,25 @@
   when: rbenv_exists is failed
 
 - name: Update rbenv
-  command: git pull
+  shell: git pull
   args:
     chdir: ~/.rbenv
   when: has_ruby_version is failed
 
 - name: Update ruby-build
-  command: git pull
+  shell: git pull
   args:
     chdir: ~/.rbenv/plugins/ruby-build
   when: has_ruby_version is failed
 
 - name: Make rbenv
-  command: src/configure && make -C src
+  shell: src/configure && make -C src
   args:
     chdir: ~/.rbenv
   when: has_ruby_version is failed
 
 - name: Register rbenv
-  command: "{{ item }}"
+  : "{{ item }}"
   with_items:
    - echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
    - echo 'eval "$(rbenv init -)"' >> ~/.bash_profile"
@@ -79,9 +79,9 @@
 # install ruby
 
 - name: Install Ruby
-  command: ~/.rbenv/bin/rbenv install "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv install "{{ ruby_version }}"
   when: has_ruby_version is failed
 
 - name: Set default ruby version
-  command: ~/.rbenv/bin/rbenv global "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv global "{{ ruby_version }}"
   when: is_ruby_version is failed
