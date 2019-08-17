@@ -16,7 +16,7 @@
   command: "{{ item }}"
   with_items:
     - cd "{{ home_dir }}"
-    - ls | "{{ app_name }}"
+    - ls | grep "{{ app_name }}"
   register: rails_app_created
   changed_when: False
   ignore_errors: yes
@@ -25,7 +25,10 @@
     - rails:check
 
 - name: check uniciorn service
-  stat: /etc/init.d/unicorn
+  shell: ls /etc/init.d/ | grep unicorn
+  become: yes
+  changed_when: False
+  ignore_errors: yes
   register: unicoern_sv
   tags:
     - gem
@@ -67,7 +70,7 @@
     src: nginx.conf.j2
     dest: /etc/nginx/nginx.conf
     mode: 0644
-  when: rails_app_created is failed or unicorn_sv.stat.exists is false
+  when: rails_app_created is failed or unicoern_sv is failed
   tags:
     - nginx
     - nginx:config
@@ -76,7 +79,7 @@
   template:
     src: unicorn.rb.j2
     dest: "{{ home_dir }}/{{ app_name }}/config/unicorn.rb"
-  when: rails_app_created is failed or unicorn_sv.stat.exists is false
+  when: rails_app_created is failed or unicoern_sv is failed
   tags:
     - gem
     - gem:config
@@ -86,7 +89,7 @@
     src: init.d.unicorn.j2
     dest: /etc/init.d/unicorn
     mode: 0755
-  when: rails_app_created is failed or unicorn_sv.stat.exists is false
+  when: rails_app_created is failed or unicoern_sv is failed
   tags:
     - service
     - service:config
@@ -97,7 +100,7 @@
     - "systemctl enable unicorn"
     - "systemctl restart unicorn"
   become: yes
-  when: rails_app_created is failed or unicorn_sv.stat.exists is false
+  when: rails_app_created is failed or unicoern_sv is failed
   tags:
     - service
     - service:config
@@ -105,6 +108,6 @@
 - name: nginx service restart
   shell: "systemctl restart nginx"
   become: yes
-  when: rails_app_created is failed or unicorn_sv.stat.exists is false
+  when: rails_app_created is failed or unicoern_sv is failed
     - service
     - service:config
