@@ -1,7 +1,13 @@
 ---
 # tasks file for rbenv
-- name: Check rbenv
+- name: Check rbenv 1
   command: ~/.rbenv/bin/rbenv --version
+  register: rbenv_exists
+  changed_when: False
+  ignore_errors: yes
+
+- name: Check rbenv 2
+  command: cat ~/.bash_profile | grep rbenv
   register: rbenv_exists
   changed_when: False
   ignore_errors: yes
