@@ -70,7 +70,7 @@
 
 - name: Register rbenv
   lineinfile:
-    dest=~/.bash_profile
+    dest=~/.bashrc
     line={{ item }}
   with_items:
     - export PATH="~/.rbenv/bin:$PATH"
@@ -78,7 +78,7 @@
   when: rbenv_exists is failed
 
 - name: Reload .bash_profile
-  shell: source ~/.bash_profile
+  shell: source ~/.bashrc
   when: rbenv_exists is failed
 
 
