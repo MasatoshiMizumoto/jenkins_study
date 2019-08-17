@@ -32,11 +32,13 @@
 
 # install rbenv
 
+- name: git rbenv
 - git:
     repo: https://github.com/rbenv/rbenv.git
     dest: ~/.rbenv
   when: rbenv_exists is failed
 
+- name: git ruby-build
 - git:
     repo: https://github.com/rbenv/ruby-build.git
     dest: ~/.rbenv/plugins/ruby-build
