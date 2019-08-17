@@ -65,7 +65,7 @@
     line=gem 'unicorn'
   when: rails_app_created is failed
 
-  - name: Gemfile rename2
+- name: Gemfile rename2
   shell: mv {{ app_name}}/Gemfile.tmp Gemfile
   when: rails_app_created is failed
 
