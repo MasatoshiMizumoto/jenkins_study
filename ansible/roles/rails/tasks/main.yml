@@ -71,6 +71,7 @@
     dest: /etc/nginx/nginx.conf
     mode: 0644
   when: rails_app_created is failed or unicoern_sv is failed
+  become: yes
   tags:
     - nginx
     - nginx:config
@@ -90,6 +91,7 @@
     dest: /etc/init.d/unicorn
     mode: 0755
   when: rails_app_created is failed or unicoern_sv is failed
+  become: yes
   tags:
     - service
     - service:config

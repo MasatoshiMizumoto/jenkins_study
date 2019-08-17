@@ -2,6 +2,7 @@
 # tasks file for comon
 - name: Installed common packages update.
   yum: name=* state=latest
+  become: yes
 
 - name: Install common package.
   yum: name={{ item }} state=latest
@@ -21,3 +22,4 @@
     - libxslt-devel
     - sqlite-devel
     - git
+  become: yes
