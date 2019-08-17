@@ -38,7 +38,7 @@
 #install
 #-------------
 - name: gem install rails -v "{{ rails_version }}"
-  shell: ~/.rbenv/shims/gem install rails -v "{{ rails_version }}"
+  shell: gem install rails -v "{{ rails_version }}"
   when: rails_installed.stdout != rails_version
   tags:
     - rails
