@@ -54,12 +54,14 @@
     - rails
     - rails:install
 
+- name: Gemfile modify
+  lineinfile:
+    dest="{{ home_dir }}/{{ app_name }}/Gemfile"
+    line=gem 'unicorn'
+  when: rails_app_created is failed
+
 - name: install unicorn
-  shell: "{{ item }}"
-  with_items:
-    - cd  "{{ app_name }}"
-    - echo 'gem 'unicorn'' >>Gemfile
-    - bundle install --path vendor/bundle
+  shell: bundle install --path vendor/bundle
   when: rails_app_created is failed
   tags:
     - gem
