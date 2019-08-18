@@ -12,6 +12,7 @@
 
 - name: copy global profile for nvm
   template: src=nvm.sh.j2 dest=/etc/profile.d/nvm.sh
+  become: yes
   when: not nvm_sh.stat.exists
 
 - name: check node
