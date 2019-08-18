@@ -1,7 +1,7 @@
 ---
 # defaults file for nvm
+nvm_user: ec2-user
 nvm:
-  nvm_user: ec2-user
   nvm_dir: /home/{{ nvm_user }}/.nvm
 
 node:
