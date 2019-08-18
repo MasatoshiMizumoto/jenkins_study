@@ -3,14 +3,14 @@
 # description: Rails application
 # processname: unicorn
 
-RAILS_ENV="{{ env_rails }}"
+RAILS_ENV={{ env_rails }}
 SERVICE=$RAILS_ENV
 
 # export HOME="/root"
 source ~/.bashrc
 source ~/.bash_profile
 
-RAILS_ROOT_DIR="{{ home_dir }}/{{ app_name }}"
+RAILS_ROOT_DIR={{ home_dir }}/{{ app_name }}
 
 PID=${RAILS_ROOT_DIR}/tmp/unicorn.pid
 UNICORN_CONF=${RAILS_ROOT_DIR}/config/unicorn.rb
@@ -29,7 +29,7 @@ start()
   echo "start ${SERVICE}"
   source /etc/environment
   cd ${RAILS_ROOT_DIR}
-  "{{ home_dir }}/.rbenv/shims/bundle exec unicorn -c ${UNICORN_CONF} -E ${RAILS_ENV} -D"
+  {{ home_dir }}/.rbenv/shims/bundle exec unicorn -c ${UNICORN_CONF} -E ${RAILS_ENV} -D
 }
 
 stop()
