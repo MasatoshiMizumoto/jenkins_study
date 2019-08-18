@@ -5,6 +5,7 @@ jenkins_study
 
 エンジニアリングスクール[RaiseTech](https://raise-tech.net/)のAWSフルコース第14回以降講座の課題：「Jenkinsを使っての環境構築」を実施したものです。
 - 本課題に関して詳細な手順書等のドキュメントはスクールより提供されておらず、AWS公式ドキュメントや検索サイトでヒットする情報を元に作成しています。
+- 最終的にRailsのトップページが見られる、はずなのですが、イラスト画像が出てません。誰か対策分かったら教えてください。
 
 ## 機能
 - CloudFormationテンプレートでのリソース構築（[AWS提供テンプレート](https://s3-ap-northeast-1.amazonaws.com/cloudformation-templates-ap-northeast-1/EIP_With_Association.template)を参考にカスタマイズ）
@@ -79,6 +80,9 @@ Jenkinsで1つ目のジョブを作製します。
 - リポジトリをgit clone
 - aws cliから作製予定のスタックと同じ名称のスタックをdeleteする。（やり直しなどの為。本来はupdateが良い。）
 - aws cliでcfn_template内のyamlを使いスタックをcreateする。
+```
+aws cloudformation create-stack --stack-name stackname --template-body file://$WORKSPACE/jenkins_study/cfn_template/ec2_with_eip.yaml
+```
 
 Jenkinsで2つ目のジョブを作製します。（全てAnsibleサーバに対してのリモートシェル）
 - リポジトリをgit clone
@@ -101,6 +105,7 @@ ansible-playbook -i inventory/ec2.py -l "ami-00a5245b4816c38e6" playbook/playboo
 - [ec2.py、EC2.ini(ansibleのGithubより)](https://github.com/ansible/ansible/tree/devel/contrib/inventory)
 - [[AWS]AnsibleのDynamic Inventoryを使って実行対象のEC2をタグ等で柔軟に指定する](https://dev.classmethod.jp/cloud/aws/ansible-dynamic-inventory-2/)
 - [Ansible statモジュールで取得できる内容 - Qiita](https://qiita.com/tiibun/items/02897ef788d21f3f05e0)
+- [Ansible ファイルを書き換える方法 - Qiita](https://qiita.com/park-jh/items/8676ec76b8313357194f)
 - [AWSにJenkins環境を構築する - Qiita](https://qiita.com/hitomatagi/items/4bf578b46c525fc01514)
 
 ## 作成者
