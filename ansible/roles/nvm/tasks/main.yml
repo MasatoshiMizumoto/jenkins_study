@@ -27,3 +27,15 @@
 - name: set default node
   shell: /bin/bash -lc "NVM_DIR={{ nvm.nvm_dir }} nvm alias default {{ node.version }}"
   when: node_installed|failed
+
+  - name: Register nvm to .bashrc
+  blockinfile:
+    path: ~/.bashrc
+    block: |
+      source {{ nvm.nvm_dir }}/nvm.sh
+    marker: ""
+  when: rbenv_exists is failed
+
+- name: Reload .bash_profile
+  shell: source ~/.bashrc
+  when: rbenv_exists is failed

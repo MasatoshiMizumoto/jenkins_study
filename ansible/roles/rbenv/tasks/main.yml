@@ -78,7 +78,7 @@
     marker: ""
   when: rbenv_exists is failed
 
-- name: Reload .bash_profile
+- name: Reload .bashrc
   shell: source ~/.bashrc
   when: rbenv_exists is failed
 
