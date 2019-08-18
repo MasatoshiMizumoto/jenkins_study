@@ -30,4 +30,3 @@
     path: "/etc/sudoers"
     regexp: "Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin"
     replace: "#Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin"
-  when: rails_app_created is failed
