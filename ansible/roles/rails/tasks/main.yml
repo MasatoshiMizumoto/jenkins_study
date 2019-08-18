@@ -46,7 +46,7 @@
 - name: Gemfile modify(mini_racer)
   blockinfile:
     path: "{{ home_dir }}/{{ app_name }}/Gemfile"
-    insertafter: '^# gem 'mini_racer', platforms: :ruby'
+    insertafter: "^# gem 'mini_racer', platforms: :ruby"
     block: |
       gem 'mini_racer', platforms: :ruby
     marker: ""
