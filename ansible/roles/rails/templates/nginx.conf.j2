@@ -38,13 +38,10 @@ http {
 
     # unicornapp 追加
     upstream unicornapp {
-         server unix:{{ home_dir }}}/{{ app_name }}/tmp/unicorn.sock;
-
+         server unix:{{ home_dir }}/{{ app_name }}/tmp/unicorn.sock;
     }
     server {
-        #listen       80 default_server;
-        #listen       [::]:80 default_server;
-	listen 80;
+	    listen 80;
         server_name  localhost;
         #root         /usr/share/nginx/html;
 
