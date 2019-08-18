@@ -12,8 +12,8 @@
 - name: check Rails app dir
   shell: "{{ item }}"
   with_items:
-    - cd "{{ home_dir }}"
-    - ls | grep "{{ app_name }}"
+    - cd {{ home_dir }}
+    - ls | grep {{ app_name }}
   register: rails_app_created
   changed_when: False
   ignore_errors: yes
@@ -28,15 +28,15 @@
 #-------------
 #install
 #-------------
-- name: gem install rails -v "{{ rails_version }}"
-  shell: gem install rails -v "{{ rails_version }}"
+- name: gem install rails -v {{ rails_version }}
+  shell: gem install rails -v {{ rails_version }}
   when: rails_installed.stdout != rails_version
 
 - name: create new rails app
   shell: "{{ item }}"
   with_items:
-    - cd "{{ home_dir }}"
-    - rails new "{{ app_name }}"
+    - cd {{ home_dir }}
+    - rails new {{ app_name }}
   when: rails_app_created is failed
 
 - name: Gemfile modify
@@ -48,7 +48,10 @@
   when: rails_app_created is failed
 
 - name: install unicorn
-  shell: bundle install --path vendor/bundle
+  shell: "{{ item }}"
+  with_items:
+    - cd {{ app_name }}
+    - bundle install --path vendor/bundle
   when: rails_app_created is failed
 
 - name: replace nginx.conf
@@ -76,12 +79,12 @@
 - name: unicorn service start
   shell: "{{ item }}"
   with_items:
-    - "systemctl enable unicorn"
-    - "systemctl restart unicorn"
+    - systemctl enable unicorn
+    - systemctl restart unicorn
   become: yes
   when: rails_app_created is failed or unicoern_sv is failed
 
 - name: nginx service restart
-  shell: "systemctl restart nginx"
+  shell: systemctl restart nginx
   become: yes
   when: rails_app_created is failed or unicoern_sv is failed

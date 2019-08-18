@@ -13,13 +13,13 @@
   ignore_errors: yes
 
 - name: Check installed ruby version
-  shell: ~/.rbenv/bin/rbenv versions | grep "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv versions | grep {{ ruby_version }}
   register: has_ruby_version
   changed_when: False
   ignore_errors: yes
 
 - name: Check ruby version
-  shell: ~/.rbenv/bin/rbenv version | grep "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv version | grep {{ ruby_version }}
   register: is_ruby_version
   changed_when: False
   ignore_errors: yes

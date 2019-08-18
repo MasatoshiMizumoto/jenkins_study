@@ -11,7 +11,7 @@
   ignore_errors: yes
 
 - name: Enable to install NGINX.
-  shell: "amazon-linux-extras enable nginx1.12"
+  shell: amazon-linux-extras enable nginx1.12
   become: yes
   when: nginx_exists is failed
 
@@ -20,11 +20,11 @@
   become: yes
 
 - name: autostart set
-  shell: "systemctl enable nginx"
+  shell: systemctl enable nginx
   become: yes
   when: nginx_exists is failed
 
 - name: service restart
-  shell: "systemctl start nginx"
+  shell: systemctl start nginx
   become: yes
   when: nginx_exists is failed
