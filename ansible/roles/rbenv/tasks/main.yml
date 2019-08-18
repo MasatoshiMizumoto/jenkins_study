@@ -69,12 +69,13 @@
   when: has_ruby_version is failed
 
 - name: Register rbenv
-  lineinfile:
-    dest=~/.bashrc
-    line={{ item }}
-  with_items:
-    - export PATH="~/.rbenv/bin:$PATH"
-    - eval "$(rbenv init -)"
+  blockinfile:
+    path: ~/.bashrc
+    create: yes
+    block: |
+      export PATH="~/.rbenv/bin:$PATH"
+      eval "$(rbenv init -)"
+    marker: ""
   when: rbenv_exists is failed
 
 - name: Reload .bash_profile
@@ -85,9 +86,9 @@
 # install ruby
 
 - name: Install Ruby
-  shell: ~/.rbenv/bin/rbenv install "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv install {{ ruby_version }}
   when: has_ruby_version is failed
 
 - name: Set default ruby version
-  shell: ~/.rbenv/bin/rbenv global "{{ ruby_version }}"
+  shell: ~/.rbenv/bin/rbenv global {{ ruby_version }}
   when: is_ruby_version is failed
