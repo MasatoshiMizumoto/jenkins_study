@@ -34,15 +34,7 @@ jenkins_study
 │       │   │   └── main.yml
 │       │   └── tasks
 │       │       └── main.yml
-│       ├── nodejs
-│       │   ├── defaults
-│       │   │   └── main.yml
-│       │   ├── tasks
-│       │   │   └── main.yml
-│       │   └── templates
-│       │       └── npm.sh.j2
 │       ├── rails
-│       │   ├── README.md
 │       │   ├── defaults
 │       │   │   └── main.yml
 │       │   ├── tasks
