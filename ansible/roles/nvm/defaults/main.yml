@@ -1,0 +1,8 @@
+---
+# defaults file for nvm
+nvm:
+  nvm_user: ec2-user
+  nvm_dir: /home/{{ nvm.nvm_user }}/.nvm
+
+node:
+  version: 10.16.3

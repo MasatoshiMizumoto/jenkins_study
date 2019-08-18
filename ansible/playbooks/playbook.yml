@@ -5,6 +5,6 @@
   roles:
     - common
     - rbenv
-    - nodejs
+    - nvm
     - nginx
     - rails

@@ -1,0 +1,5 @@
+export NVM_DIR={{ nvm.nvm_dir }}
+
+if [[ -s {{ nvm.nvm_dir }}/nvm.sh ]] ; then
+  source {{ nvm.nvm_dir }}/nvm.sh
+fi
