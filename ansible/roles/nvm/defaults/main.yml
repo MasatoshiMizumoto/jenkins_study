@@ -1,8 +1,0 @@
----
-# defaults file for nvm
-nvm_user: ec2-user
-nvm:
-  nvm_dir: /usr/local/.nvm
-
-node:
-  version: 10.16.3
