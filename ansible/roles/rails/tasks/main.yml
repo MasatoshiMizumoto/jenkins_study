@@ -35,7 +35,7 @@
     - rails new {{ app_name }}
   when: rails_app_created is failed
 
-- name: Gemfile modify
+- name: Gemfile modify(unicorn)
   blockinfile:
     path: "{{ home_dir }}/{{ app_name }}/Gemfile"
     block: |
@@ -43,7 +43,7 @@
     marker: ""
   when: rails_app_created is failed
 
-- name: Gemfile modify
+- name: Gemfile modify(mini_racer)
   blockinfile:
     path: "{{ home_dir }}/{{ app_name }}/Gemfile"
     insertafter: '^# gem 'mini_racer', platforms: :ruby'
@@ -52,7 +52,7 @@
     marker: ""
   when: rails_app_created is failed
 
-- name: install unicorn
+- name: install unicorn,mini_racer
   shell: "{{ item }}"
   with_items:
     - bundle install --gemfile={{ home_dir }}/{{ app_name }}/Gemfile --path {{ home_dir }}/{{ app_name }}/vendor/bundle
@@ -80,15 +80,15 @@
   when: rails_app_created is failed or unicoern_sv is failed
   become: yes
 
+- name: nginx service restart
+  shell: systemctl restart nginx
+  become: yes
+  when: rails_app_created is failed or unicoern_sv is failed
+
 - name: unicorn service start
   shell: "{{ item }}"
   with_items:
     - systemctl enable unicorn
     - systemctl restart unicorn
-  become: yes
-  when: rails_app_created is failed or unicoern_sv is failed
-
-- name: nginx service restart
-  shell: systemctl restart nginx
   become: yes
   when: rails_app_created is failed or unicoern_sv is failed
