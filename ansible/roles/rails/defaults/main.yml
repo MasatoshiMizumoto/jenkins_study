@@ -2,5 +2,6 @@
 # defaults file for rails
 rails_version: "5.2.3"
 app_name: "test_app"
+user_name: "ec2-user"
 home_dir: "/home/ec2-user"
 env_rails: "production"

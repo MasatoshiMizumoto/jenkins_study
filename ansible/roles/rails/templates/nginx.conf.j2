@@ -1,4 +1,4 @@
-user ec2-user;
+user {{ user_name }};
 worker_processes auto;
 error_log /var/log/nginx/error.log;
 pid /var/run/nginx.pid;
@@ -38,7 +38,7 @@ http {
 
     # unicornapp 追加
     upstream unicornapp {
-         server unix:/home/ec2-user/"{{ test_app }}"/tmp/unicorn.sock;
+         server unix:{{ home_dir }}}/{{ app_name }}/tmp/unicorn.sock;
 
     }
     server {
