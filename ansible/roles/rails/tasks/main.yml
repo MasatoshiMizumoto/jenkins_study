@@ -50,7 +50,7 @@
 - name: install unicorn
   shell: "{{ item }}"
   with_items:
-    - cd {{ app_name }}
+    - cd {{ home_dir }}/{{ app_name }}
     - bundle install --path vendor/bundle
   when: rails_app_created is failed
 
