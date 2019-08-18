@@ -24,9 +24,22 @@
     - git
   become: yes
 
+- name: check secure_path
+  shell: ls /etc/ | grep sudoers.old
+  become: yes
+  changed_when: False
+  ignore_errors: yes
+  register: sudores_ok
+
+- name: copy sudoers
+  shell: sudo cp /etc/sudoers /etc/sudoers.old
+  become: yes
+  when: sudores_ok is failed
+
 - name: desable secure_path
   become: yes
   replace:
     path: "/etc/sudoers"
     regexp: "Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin"
     replace: "#Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin"
+  when: sudores_ok is failed
