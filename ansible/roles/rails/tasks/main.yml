@@ -10,10 +10,7 @@
   ignore_errors: yes
 
 - name: check Rails app dir
-  shell: "{{ item }}"
-  with_items:
-    - cd {{ home_dir }}
-    - ls | grep {{ app_name }}
+  shell: ls {{ home_dir }} | grep {{ app_name }}
   register: rails_app_created
   changed_when: False
   ignore_errors: yes
@@ -35,7 +32,7 @@
 - name: create new rails app
   shell: "{{ item }}"
   with_items:
-    - cd {{ home_dir }}
+    # - cd {{ home_dir }}
     - rails new {{ app_name }}
   when: rails_app_created is failed
 
@@ -50,7 +47,7 @@
 - name: install unicorn
   shell: "{{ item }}"
   with_items:
-    - cd {{ home_dir }}/{{ app_name }}
+    # - cd {{ home_dir }}/{{ app_name }}
     - bundle install --gemfile={{ home_dir }}/{{ app_name }}/Gemfile --path {{ home_dir }}/{{ app_name }}/vendor/bundle
   when: rails_app_created is failed
 

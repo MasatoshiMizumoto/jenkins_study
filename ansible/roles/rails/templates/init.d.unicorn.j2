@@ -10,7 +10,7 @@ export HOME="/root"
 source ~/.bashrc
 source ~/.bash_profile
 
-RAILS_ROOT_DIR=""{{ home_dir }}"/"{{ test_app }}""
+RAILS_ROOT_DIR="{{ home_dir }}/{{ app_name }}"
 
 PID=${RAILS_ROOT_DIR}/tmp/unicorn.pid
 UNICORN_CONF=${RAILS_ROOT_DIR}/config/unicorn.rb
