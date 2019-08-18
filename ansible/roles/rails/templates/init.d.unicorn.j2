@@ -6,7 +6,7 @@
 RAILS_ENV="{{ env_rails }}"
 SERVICE=$RAILS_ENV
 
-export HOME="/root"
+# export HOME="/root"
 source ~/.bashrc
 source ~/.bash_profile
 
@@ -29,7 +29,7 @@ start()
   echo "start ${SERVICE}"
   source /etc/environment
   cd ${RAILS_ROOT_DIR}
-  bundle exec unicorn_rails -c ${UNICORN_CONF} -E ${RAILS_ENV} -D
+  "{{ home_dir }}/.rbenv/shims/bundle exec unicorn_rails -c ${UNICORN_CONF} -E ${RAILS_ENV} -D"
 }
 
 stop()
