@@ -51,7 +51,7 @@
   shell: "{{ item }}"
   with_items:
     - cd {{ home_dir }}/{{ app_name }}
-    - bundle install --path vendor/bundle
+    - bundle install --gemfile=./Gemfile --path ./vendor/bundle
   when: rails_app_created is failed
 
 - name: replace nginx.conf
