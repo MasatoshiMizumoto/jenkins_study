@@ -9,7 +9,7 @@ jenkins_study
 
 ## 機能
 - CloudFormationテンプレートでのリソース構築（[AWS提供テンプレート](https://s3-ap-northeast-1.amazonaws.com/cloudformation-templates-ap-northeast-1/EIP_With_Association.template)を参考にカスタマイズ）
-- Ansibleでのインストール自動化[ansible_study](https://github.com/miima17/ansible_study)＋ec2.pyでのhosts決定
+- Ansibleでのインストール自動化(rails,unicorn,nginx＋ec2.pyでのhosts決定)
 
 ## 構成
 - ディレクトリ構成
