@@ -102,4 +102,4 @@ ansible-playbook -i inventory/ec2.py -l "ami-00a5245b4816c38e6" playbook/playboo
 
 ## 作成者
 
-[@miima_17](https://twitter.com/miima_17)
+[MasatoshiMizumoto](https://github.com/MasatoshiMizumoto)
