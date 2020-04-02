@@ -5,7 +5,7 @@ jenkins_study
 
 エンジニアリングスクール[RaiseTech](https://raise-tech.net/)のAWSフルコース第14回以降講座の課題：「Jenkinsを使っての環境構築」を実施したものです。
 - 本課題に関して詳細な手順書等のドキュメントはスクールより提供されておらず、AWS公式ドキュメントや検索サイトでヒットする情報を元に作成しています。
-- 最終的にRailsのトップページが見られる、はずなのですが、イラスト画像が出てません。誰か対策分かったら教えてください。
+- 最終的にRailsのトップページが見られる、はずなのですが、イラスト画像が出てません。アクセス権不足のようです。
 
 ## 機能
 - CloudFormationテンプレートでのリソース構築（[AWS提供テンプレート](https://s3-ap-northeast-1.amazonaws.com/cloudformation-templates-ap-northeast-1/EIP_With_Association.template)を参考にカスタマイズ）
